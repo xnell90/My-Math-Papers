@@ -1,0 +1,404 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
+\usepackage[margin=1in]{geometry}
+\usepackage[colorlinks]{hyperref}
+\usepackage{mathtools}
+\usepackage{tikz}
+
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+
+\theoremstyle{definition}
+
+\newcommand{\C}{{\mathbb{C}}}
+\newcommand{\F}{{\mathbb{F}}}
+\newcommand{\R}{{\mathbb{R}}}
+\newcommand{\Z}{{\mathbb{Z}}}
+\newcommand{\N}{{\mathbb{N}}}
+
+\newtheorem{thm}{Theorem}
+\newtheorem*{thm*}{Theorem}
+\newtheorem{cor}{Corollary}
+\newtheorem{lem}{Lemma}
+\newtheorem{defn}{Definition}
+\newtheorem{prop}{Proposition}
+\newtheorem{rem}{Remark}
+
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{Approximating The Number of Proper Colorings on a Cartesian Product of Path Graphs}
+
+\author{Alwyn Lopez\\alwyn333@hotmail.com}
+
+\date{31st October 2016}
+\maketitle
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{abstract}
+
+This paper demonstrates an inequality on the number of proper colorings on a cartesian product of path graphs. More precisely, we prove the following theorem: \\
+
+\noindent Let $k \in \N - \{1\}$ and $n_1, n_2, n_3, \ldots, n_k \in \N$ such that for all $i \in \{1, 2, \ldots, k\}$, $n_i$ is even. Then there exists $a,b,c \in \N$ such that
+\begin{equation}
+chr(K_{a,b},\lambda) \leq chr(\prod_{i = 1}^{k}P_{n_{i}}, \lambda) \leq chr(P_{2} \times P_{c}, \lambda) \nonumber
+\end{equation} where $chr(G,\lambda)$ is the number of proper colorings of an arbitrary graph $G$ with $\lambda$ colors, and $K_{a,b}$ is the complete bipartite graph. 
+\end{abstract}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Introduction}
+\label{sec:intro}
+
+Finding the number of proper colorings has a long interesting history in graph theory. If we were to derive the number of proper colorings of a graph using $\lambda$ colors, we would also derive the chromatic polynomial of a graph. There are many interesting properties of the chromatic polynomial, along with known chromatic polynomials of basic graphs \cite{Tam09}. However, there are non-trivial graphs that do not have known chromatic polynomials. One well known example, by Reed and Tutte, is finding the chromatic polynomial of a grid graph with $m$ rows and $n$ columns \cite{Tut88}. Another example is that we also do not know a closed formula for the chromatic polynomial of a Cartesian product of path graphs. However, if we want to estimate the number of proper colorings on a Cartesian product of path graphs, then it is not necessary to compute the chromatic polynomial; we can do so via edge cuts and edge deletions. More precisely, we can derive an upper bound by performing edge cuts and we can derive a lower bound by performing edge additions. 
+
+This paper demonstrates this in detail by dividing itself into multiple sections. The first section will define a domino graph, and derive inequalities on the number of proper colorings based on edge addition and edge deletion. Once we derive all basic results necessary in the first section, the next section and last section of the paper will use these results to derive lower and upper bounds on $\prod_{i = 1}^{k} P_{n_{i}}$ respectively.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Preliminaries}
+\label{sec:Preliminaries}
+
+In this section, we will first define the Domino graph and derive its properties, then we will derive inequalities on the number of proper colorings of an arbitrary graph. For notation's sake, we define $V(G)$ as the vertex set of the graph $G$, $E(G)$ as the edge set of $G$, and $chr(G,\lambda)$ be the chromatic polynomial of $G$ with $\lambda$ colors.
+
+\begin{defn}
+Let $G$ and $H$ be ladder graphs such that $V(G) \cap V(H) = \{u,v\}$, where $u$ and $v$ are adjacent vertices, and $E(G) \cap E(H) = \{\{u, v\}\}$. We define the \textit{Domino Graph} as the union of $G \cup H$.
+\end{defn}
+
+By the definition of a domino graph, we can trivially deduce that all ladder graphs are domino graphs, and not all domino graphs are ladder graphs. Despite this, we can demonstrate the following lemma.
+
+\begin{lem}
+Domino graphs are chromatically equivalent to ladder graphs.
+\end{lem}
+
+\begin{proof}
+Let $G$ be a domino graph so there exists ladder graphs $G_1 := P_n \times P_2$ and $G_2 := P_m \times P_2$, for some $n, m \in \N$, such that $V(G_1) \cap V(G_2) = \{u, v\}$, where $u$ and $v$ are adjacent vertices, and $G = G_1 \cup G_2$. Since $G_1 \cap G_2 = P_2$, then
+
+\begin{equation}
+chr(G_1 \cup G_2, \lambda) = \frac{chr(G_1,\lambda)chr(G_2,\lambda)}{chr(G_1 \cap G_2, \lambda)} = \frac{chr(P_n \times P_2,\lambda)chr(P_m \times P_2,\lambda)}{\lambda(\lambda - 1)} = chr(P_{n + m - 1},\lambda). \nonumber
+\end{equation}
+
+\end{proof}
+
+Lemma 1 can be used to demonstrate the following. If $G$ and $H$ are domino graphs such that they share a common edge, then we can compute the chromatic polynomial of $G \cup H$. In other words, we have the following proposition.
+
+\begin{prop}
+Let $G$ and $H$ be domino graphs such that $V(G) \cap V(H) = \{u,v\}$, where $u$ and $v$ are adjacent vertices, and $E(G) \cap E(H) = \{ \{u, v\}\}$. Then the $G \cup H$ is chromatically equivalent to  a ladder graph.
+\end{prop}
+
+\begin{proof}
+We know that $G$ and $H$ are domino graphs, then by lemma 1, there exists $n,m \in \N$ such that $G$ is chromatically equivalent to $P_n$ and $H$ is chromatically equivalent to $P_m$. As a consequence,
+
+\begin{equation}
+chr(G \cup H, \lambda) = \frac{chr(G, \lambda)chr(H, \lambda)}{chr(G \cap H, \lambda)} = \frac{chr(P_n, \lambda)chr(P_m, \lambda)}{\lambda(\lambda - 1)} = chr(P_{n + m - 1}, \lambda). \nonumber
+\end{equation}
+
+\end{proof}
+
+Since we are more concerned with the Cartesian product of path graphs $G$, we can use proposition 1 to derive the upper bound on the number of proper colorings of $G$ with $\lambda$ colors. To do this, we need to perform edge deletions and then compute the chromatic polynomial of our modified graph. Before we can do this, we need to prove the following results.
+
+\begin{prop}
+Let G be a graph and $i,j \in V(G)$. If $\{i,j\} \not\in E(G)$, then
+
+\begin{equation}
+chr(G + ij, \lambda) \leq chr(G, \lambda),
+\end{equation} where $G + ij$ denotes an edge addition between vertices $i$ and $j$. If $\{i,j\} \in E(G)$, then
+
+\begin{equation}
+chr(G,\lambda) \leq chr(G - ij,\lambda),
+\end{equation} where $G - ij$ denotes an edge deletion between vertices $i$ and $j$.
+
+\end{prop}
+
+\begin{proof}
+Let $G$ be a graph and $i,j \in V(G)$. Assume that $\{i, j\} \in E(G)$ and let $C_{G}$ be the set of all proper colorings of $G$, and $C_{G + ij}$ be the set of all proper colorings of $G + ij$. Then we can can claim that 
+\begin{equation}
+C_{G + ij} \subseteq C_{G} \nonumber
+\end{equation} because every proper coloring in $C_{G + ij}$ is a coloring in $C_{G}$. Thus,
+
+\begin{equation}
+chr(G + ij,\lambda) = |C_{G + ij}| \leq |C_{G}| = chr(G,\lambda). \nonumber
+\end{equation} Similarly, assume that $\{i, j\} \notin E(G)$ and let $C_{G - ij}$ be the set of all proper colorings of $G - ij$ so,
+
+\begin{equation}
+C_{G} \subseteq C_{G - ij} \nonumber
+\end{equation} because every proper coloring in $C_{G}$ is a proper coloring in $C_{G - ij}$. Hence,
+
+\begin{equation}
+chr(G,\lambda) = |C_{G}| \leq |C_{G - ij}| = chr(G - ij,\lambda). \nonumber
+\end{equation}
+
+\end{proof}
+
+By repeatedly using proposition 2, we can perform series of edge deletions to obtain upper bounds on the number of proper colorings. As a consequence, we have the following result without proof.
+
+\begin{thm}
+Let $G$ be a simple graph and $H$ be a subgraph of $G$ such that $V(G) = V(H)$ and $E(H) \subset E(G)$. Then
+
+\begin{equation}
+chr(G,\lambda) \leq chr(H,\lambda)
+\end{equation}
+
+\end{thm}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Lower Bound}
+\label{sec:Lower Bound}
+
+To compute the lower bound on the number of proper colorings of a grid graph (or a Cartesian product of path graphs) we will first partition the vertex set into two disjoint sets, $A$ and $B$, such that every edge has a vertex in $A$, and another vertex in $B$. Next, for each vertex in $A$ we draw an edge for every vertex in $B$, and finally compute the chromatic polynomial of our new graph. We can do this because the grid graph is bipartite. Hence, we can prove the following propositions.
+
+\begin{prop}
+For all $n,m \in \N, 3 \leq n \leq m$ and $\lambda \in \N$
+
+\begin{equation}
+chr(K_{\alpha, \beta}, \lambda) \leq chr(P_n \times P_m, \lambda)
+\end{equation} where $\alpha = \ceil*{\frac{nm}{2}}$ and $\beta = nm - \ceil*{\frac{nm}{2}}$.
+\end{prop}
+
+\begin{proof}
+Recall that the vertex set of $P_{n} \times P_{m}$ is 
+\begin{equation}
+V(P_{n} \times P_{m}) = \{(x,y): 1 \leq x \leq n, 1 \leq y \leq m \}, \nonumber
+\end{equation} so partition the vertex set by setting 
+\begin{equation}
+A := \{ \alpha = (x, y) \in V(G): 2 \nmid (x + y)\} \text{, and }
+B := \{\beta = (x, y) \in V(G): 2 \mid (x + y)\}. \nonumber
+\end{equation}
+
+Trivially, we can see that $A$ and $B$ form a partition of our vertex set because $V(P_n \times P_m) = A \cup B$ and $A \cap B = \emptyset$. We can also observe that every edge in $P_n \times P_m$ has vertices in $A$ and $B$, but we need to demonstrate that $|A| = \ceil*{\frac{nm}{2}}$, and $|B| = nm - \ceil*{\frac{nm}{2}}$. Indeed, if we take an arbitrary Hamiltonian path starting from $(1,1)$ to $(n,m)$ and take the largest independent set in our Hamiltonian path, then that independent set equals to $A$ and $|A| = \ceil*{\frac{nm}{2}}$. Hence, $|B| = nm - \ceil*{\frac{nm}{2}}$.
+
+For each vertex in $A$, draw edges to every vertex in $B$, and define this new graph as $H$. Then $H = K_{\alpha, \beta}$ because every edge in $H$ has one vertex in $A$, and one vertex in $B$. Additionally, we can easily see that $E(P_{n} \times P_{m}) \subset E(H)$, and $V(P_{n} \times P_{m}) = V(H)$. Therefore, by theorem 1, we can conclude that
+
+\begin{equation}
+chr(H, \lambda) = chr(K_{\alpha, \beta},\lambda) \leq chr(P_{n} \times P_{m}, \lambda) \nonumber
+\end{equation}
+
+\end{proof}
+
+The previous proposition naturally generalizes to a Cartesian product of path graphs, so we have the following propostion.
+
+\begin{prop}
+Pick any $k \in \N -\{1\}$ and let $\lambda, n_1, n_2, n_3, \ldots, n_k \in \N$, such that for all $i \in \{1, 2, 3,\ldots, k\}$, $n_i \geq 3$. Then
+
+\begin{equation}
+chr(K_{\alpha, \beta}, \lambda) \leq chr(\prod_{i = 1}^{k}P_{n_{i}}, \lambda)
+\end{equation} where $\alpha := \ceil*{\frac{n_{1}n_{2}\ldots n_{k}}{2}}$ and $\beta := n_{1}n_{2}\ldots n_{k} - \ceil*{\frac{n_{1}n_{2}\ldots n_{k}}{2}}$
+\end{prop}
+
+\begin{proof}
+We know that $\prod_{i = 1}^{k}P_{n_{i}}$ is a bipartite graph simply because it is a Cartesian product of bipartite graphs. However, we need to find a way to partition the vertex set of $\prod_{i = 1}^{k}P_{n_{i}}$ into two sets, $A$ and $B$, such that every edge in our graph has a vertex in $A$, and a vertex in $B$.
+Indeed, if we let 
+
+\begin{equation}
+A = \{ (x_1, x_2, x_3, \ldots, x_{k}) \in V(\prod_{i = 1}^{k}P_{n_{i}}): \sum_{i = 1}^{k}x_{i} \text{ is even} \} \nonumber
+\end{equation} and
+
+\begin{equation}
+B = \{ (x_1, x_2, x_3, \ldots, x_{k}) \in V(\prod_{i = 1}^{k}P_{n_{i}}): \sum_{i = 1}^{k}x_{i} \text{ is odd}\}, \nonumber
+\end{equation} then it partitions our vertex set. Take an arbitrary Hamiltonian path $P$ that starts from $(1, 1, 1,\ldots, 1)$ and ends at $(n_1,n_2,n_3,\ldots, n_k)$. There are two cases to consider:
+
+\begin{itemize}
+\item \textbf{Case 1: }$k$ is even
+\end{itemize}If $k$ is even, then $A$ must contain $(1, 1, 1,\ldots, 1)$. This means that if we take the largest independent set in $P$ that contains $(1, 1, 1,\ldots, 1)$, then that set must be $A$ and $|A| = \alpha$. As a consequence $|B| = \beta$.
+
+\begin{itemize}
+\item \textbf{Case 2: }$k$ is odd
+\end{itemize}If $k$ is odd, then $B$ must contain $(1, 1, 1,\ldots, 1)$. This means that if we take the largest independent set in $P$ that contains $(1, 1, 1,\ldots, 1)$, then that set must be $B$ and $|B| = \alpha$. As a consequence $|A| = \beta$.
+\newline
+\newline \indent
+Regardless of both cases, we can construct a new graph $H$ from $\prod_{i = 1}^{k}P_{n_{i}}$ as follows. For every vertex from $A$, draw edges to every vertex in $B$. Then we can infer that $H = K_{\alpha, \beta}$. Since $\prod_{i = 1}^{k}P_{n_{i}}$ is a subgraph of $H$ such $V(\prod_{i = 1}^{k}P_{n_{i}}) = V(H)$, and $E(\prod_{i = 1}^{k}P_{n_{i}}) \subset E(H)$, then we can conclude that 
+\begin{equation}
+chr(K_{\alpha, \beta}, \lambda) \leq chr(\prod_{i = 1}^{k}P_{n_{i}}, \lambda). \nonumber
+\end{equation}
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Upper Bound}
+\label{sec:Upper Bound}
+
+To compute the upper bound on the number of proper colorings of a grid graph (or a Cartesian product of path graphs), we need to perform a series of edge cuts so that our new graph is a union of domino graphs. Once we have that, we can use the results from the preliminaries to compute the chromatic polynomial of a domino graph, hence an upper bound on the number of proper colorings. Before we can do this, we need to consider the grid graph case when the number of rows and columns are even and the same. The general case, when the number of rows and columns are even and distinct will be considered afterwards.
+
+\begin{prop}
+For all $n,\lambda \in \N - \{1\}$
+
+\begin{equation}
+chr(P_{2n} \times P_{2n}, \lambda) \leq \frac{chr(P_{2} \times P_{4n - 1},\lambda)chr(P_{2n - 2} \times P_{2n - 2}, \lambda)}{\lambda(\lambda - 1)}
+\end{equation}
+\end{prop}
+
+\begin{proof}
+Starting with $G := P_{2n} \times P_{2n}$, delete edges in the set 
+
+\begin{equation}
+(\bigcup_{l = 3}^{2n} E_l) \cup (\bigcup_{l = 3}^{2n - 2} F_j) \nonumber
+\end{equation} where $E_{l} = \{\{(l,2), (l,3)\}\}$, and $F_j = \{\{(2,j), (3,j)\}\}$, and call this new graph $H'$. Clearly, $V(G) = V(H')$ and $E(H') \subset E(G)$, so let $A$ be the subgraph of $H'$ such that it is induced by the vertex set 
+
+\begin{equation}
+V(A) := \{(3,2n - 1), (3,2n)\} \cup (\bigcup_{i = 1}^{2n} \bigcup_{k = 1}^{2} \{(i,k),(k,i)\}), \nonumber
+\end{equation} and $B$ be the subgraph of $H'$ such that it is induced by the vertex set 
+
+\begin{equation}
+V(B) := \bigcup_{a = 3}^{2n} \bigcup_{b = 3}^{2n} \{(a,b)\}. \nonumber
+\end{equation} By our construction, the subgraph $A$ is a union of three domino graphs so we can deduce via induction that $chr(A,\lambda) = chr(P_{2} \times P_{4n - 1}, \lambda)$. Additionally, it is clear that $B$ is a grid graph with $2n - 2$ rows and $2n - 2$ columns so $chr(B, \lambda) = chr(P_{2n-2}\times P_{2n-2},\lambda)$. Since the intersection of $A$ and $B$ is $P_2$ then we can conclude that 
+
+\begin{equation}
+chr(H', \lambda) = chr(A \cap B, \lambda) = \frac{chr(P_2 \times P_{4n - 1}, \lambda)chr(P_{2n - 2} \times P_{2n - 2})}{\lambda(\lambda - 1)}. \nonumber
+\end{equation} Thus, 
+
+\begin{equation}
+chr(P_{2n} \times P_{2n},\lambda) \leq chr(H',\lambda) = \frac{chr(P_{2} \times P_{4n - 1},\lambda)chr(P_{2n - 2} \times P_{2n - 2}, \lambda)}{\lambda(\lambda - 1)}. \nonumber
+\end{equation}
+\end{proof}
+
+Notice that proposition 5 demonstrates a recursive inequality on the number of proper colorings of $P_{2n} \times P_{2n}$. We can repeatedly use theorem 2 until we reach to the case when you have the $chr(P_2 \times P_2, \lambda)$ as factor. Hence, we can prove the following:
+
+\begin{thm}
+For all $n \in \N - \{1\}$ and a fixed $\lambda \in \N - \{1\}$
+
+\begin{equation}
+chr(P_{2n} \times P_{2n},\lambda) \leq chr(P_{2} \times P_{2}, \lambda)\prod_{i = 0}^{n - 2}\frac{chr(P_{2} \times P_{4(n - i) - 1}, \lambda)}{\lambda(\lambda - 1)}
+\end{equation}
+
+\end{thm}
+
+\begin{proof}
+For n = 2, we know, by the previous theorem, that 
+\begin{equation}
+chr(P_{4} \times P_{4}, \lambda) \leq \frac{chr(P_{2} \times P_{7}, \lambda)chr(P_{2} \times P_{2}, \lambda)}{\lambda(\lambda - 1)} \nonumber
+\end{equation} so assume that for $n = k$,
+
+\begin{equation}
+chr(P_{2k} \times P_{2k}, \lambda) \leq chr(P_{2} \times P_{2},\lambda)\prod_{i = 0}^{k - 2} \frac{chr(P_{2} \times P_{4(k - i) - 1},\lambda)}{\lambda(\lambda - 1)}. \nonumber
+\end{equation} Then for $n = k + 1$
+\begin{align*}
+chr(P_{2k + 2} \times P_{2k + 2},\lambda) &\leq \frac{chr(P_{2} \times P_{4k + 3},\lambda)chr(P_{2k} \times P_{2k},\lambda)}{\lambda(\lambda - 1)} 
+\nonumber \\
+&\leq chr(P_{2} \times P_{2},\lambda) \frac{chr(P_{2} \times P_{4k + 3},\lambda)}{\lambda(\lambda - 1)}\prod_{i = 0}^{k - 2} \frac{chr(P_{2} \times P_{4(k - i) - 1},\lambda)}{\lambda(\lambda - 1)} \nonumber \\
+&= chr(P_{2} \times P_{2},\lambda)\frac{chr(P_{2} \times P_{4k + 3},\lambda)}{\lambda(\lambda - 1)}\prod_{i = 1}^{k - 1} \frac{chr(P_{2} \times P_{4(k - i) + 3},\lambda)}{\lambda(\lambda - 1)}  \\
+&= chr(P_{2} \times P_{2},\lambda)\prod_{i = 0}^{k - 1} \frac{chr(P_{2} \times P_{4(k - i) + 3},\lambda)}{\lambda(\lambda - 1)}
+\end{align*}
+
+\end{proof}
+
+As a consequence of the previous theorem, we can simplify the right hand side of (7) by replacing $chr(P_2 \times P_2,\lambda)$ and $chr(P_2 \times P_{4(n - i) - 1},\lambda)$ by the chromatic polynomials for ladder graphs \cite{Weiss}, so trivially we can prove the following.
+
+\begin{cor}
+For all $n \in \N - \{1\}$ and a fixed $\lambda \in \N - \{1\}$
+\begin{equation}
+chr(P_{2n} \times P_{2n}, \lambda) \leq chr(P_{2} \times P_{2n^2 + 2}, \lambda)
+\end{equation}
+
+\end{cor}
+
+Although the previous results considered the case when the number of rows and columns of a grid graph are the same and even, we can generalize our results if we consider the case when the number of rows and columns of a grid graph are different and even. Since $P_{2n} \times P_{2m}$, where $n < m$, contains a subgraph equivalent to $P_{2n} \times P_{2n}$, we only need to delete a specific number of edges not in $P_{2n} \times P_{2n}$ and then use the previous results to compute the upper bound. In other words, we have the following theorems.
+
+\begin{thm}
+Let $n,m \in \N - \{1\}$ such that $n < m$, then
+
+\begin{equation}
+chr(P_{2n} \times P_{2m}, \lambda) \leq \frac{chr(P_{2n} \times P_{2n}, \lambda)[chr(P_{2} \times P_{2m - 2n + 1}, \lambda)]^n}{[\lambda(\lambda - 1)]^n}
+\end{equation}
+\end{thm}
+
+\begin{proof}
+Recall that the vertices of $P_{2n} \times P_{2m}$ is defined by 
+\begin{equation}
+V(P_{2n} \times P_{2m}) = \{(a,b): a\in [2n],b \in [2m]\}, \nonumber
+\end{equation} where $[n] = \{1, 2, 3,\ldots, n\}$, and the edges of $P_{2n} \times P_{2m}$ is defined by
+
+\begin{equation}
+E(P_{2n} \times P_{2m}) =\{ \{(a, b),(c, d)\} \subseteq V(P_{2n} \times P_{2m}): |a - c| = 1 \text{ or } |b - d| = 1 \}. \nonumber
+\end{equation} Create a subgraph, $H$, from $P_{2n} \times P_{2m}$, by deleting all the edges in the set
+
+\begin{equation}
+\bigcup_{i = 1}^{n - 1} \bigcup_{j = 2n}^{2m - 1} \{ \{(2i - 1, j),(2i, j)\} \} \nonumber
+\end{equation} Then
+\begin{equation}
+H = (P_{2n} \times P_{2n}) \bigcup_{i = 1}^{n}J_{i}, \nonumber
+\end{equation} where each $J_i$ are graphs isomorphic to $P_{2} \times P_{2m - 2n + 1}$. Moreover, for all $i \in \{1, 2, 3,\ldots, n \}$, 
+
+\begin{equation}
+J_i \cap (P_{2n} \times P_{2n}) = P_2 \nonumber
+\end{equation} so 
+\begin{equation}
+chr(H,\lambda) = \frac{chr(P_{2n} \times P_{2n}, \lambda)[chr(P_{2} \times P_{2m - 2n + 1}, \lambda)]^n}{[\lambda(\lambda - 1)]^n}. \nonumber
+\end{equation} Since $H$ is a subgraph of $P_{2n} \times P_{2m}$ that contains all vertices of $P_{2n} \times P_{2m}$, then inequality (9) holds.
+\end{proof}
+Naturally, we can simply the right hand side of (9) by using the chromatic polynomial of a ladder graph and corollary 1, so we have the following corollary.
+
+\begin{cor}
+Let $n,m \in \N - \{1\}$ such that $n < m$, then
+\begin{equation}
+chr(P_{2n} \times P_{2m}, \lambda) \leq chr(P_{2} \times P_{2nm + 2}, \lambda) \nonumber
+\end{equation}
+\end{cor}
+
+\begin{proof}
+Simplify the right hand side of equation (9) so
+
+\begin{align*}
+\frac{chr(P_{2n} \times P_{2n})[chr(P_{2} \times P_{m - n + 1})]^n}{[\lambda(\lambda - 1)]^n} &= \frac{chr(P_{2n} \times P_{2n})[\lambda(\lambda - 1)(\lambda^2 -3\lambda + 3)^{2m - 2n}]^n}{[\lambda(\lambda - 1)]^n} \\
+&= chr(P_{2n} \times P_{2n}, \lambda)(\lambda^2 - 3\lambda + 3)^{2nm - 2n^2} \\
+&\leq chr(P_{2} \times P_{2n^2 + 2},\lambda)(\lambda^2 -3\lambda + 3)^{2nm - 2n^2} \\
+&= \lambda(\lambda - 1)(\lambda^2 - 3\lambda + 3)^{2nm + 1} \\
+&= chr(P_{2} \times P_{2nm + 2}, \lambda)
+\end{align*}
+\end{proof}
+
+With all of the previous results, we can derive an upper bound for the general case.
+
+\begin{thm}
+Let $k \in \N - \{1\}$ and $n_1, n_2, n_3, \ldots, n_k \in \N$ such that for all $i \in \{1, 2, \ldots, k\}$, $2 | n_i$. Then there exists a subgraph, $H$, of $\prod_{i = 1}^{k}P_{n_{i}}$ such that it is chromatically equivalent to $P_2 \times P_l$, for some $l \in \N$, $V(H) = V(\prod_{i = 1}^{k}P_{n_{i}})$ and
+
+\begin{equation}
+chr(\prod_{i = 1}^{k}P_{n_{i}}, \lambda) \leq chr(P_{2} \times P_{l}, \lambda)
+\end{equation}
+\end{thm}
+
+\begin{proof}
+Without any loss of generality, assume that $n_1 \leq n_2 \leq n_3 \leq \ldots \leq n_k$. When $k = 2$, then (11) holds because of corollary 2 so assume that the theorem holds for $k = m$. Observe that for $k = m + 1$,
+
+\begin{equation}
+chr(\prod_{i = 1}^{m + 1}P_{n_{i}}, \lambda) = chr\Big((\prod_{i = 1}^{m}P_{n_{i}}) \times P_{n_{m + 1}},\lambda \Big). \nonumber
+\end{equation} By the inductive hypothesis, there is a subgraph $H$ such that it is chromatically equivalent to $P_2 \times P_{l}$, for some $l \in \N$, and $V(H) = V(\prod_{i = 1}^{m}P_{n_{i}})$, and
+
+\begin{equation}
+chr((\prod_{i = 1}^{m}P_{n_{i}},) \times P_{n_{m + 1}},\lambda) \leq chr(H \times P_{n_{m + 1}},\lambda). \nonumber
+\end{equation} Construct a new graph $H'$ from $H \times P_{n_{m + 1}}$ as follows: Fix $\alpha,\beta \in V(H)$ such that $\{\alpha, \beta \}$ is an edge in $H$, then delete all edges in 
+
+\begin{equation}
+\bigcup_{i = 1}^{n_{m + 1} - 1} \{\{(a, i),(a, i + 1)\}: a \in V(H) - \{\alpha, \beta\}\}. \nonumber
+\end{equation} Then $H'$ is chromatically equivalent to $P_2 \times P_{l(n_{m + 1}) + l}$ so 
+
+\begin{equation}
+chr(H \times P_{n_{m + 1}}, \lambda) \leq chr(H', \lambda) = chr(P_2 \times P_{l(n_{m + 1}) + l}), \nonumber
+\end{equation} and inequality in (10) holds.
+\end{proof}
+
+By using the result from the lower bound, and upper bound sections, we can end this paper by making the following claim:
+
+\begin{thm*}
+Let $k \in \N - \{1\}$ and $n_1, n_2, n_3, \ldots, n_k \in \N$ such that for all $i \in \{1, 2, \ldots, k\}$, $2 | n_i$. Then there exists $a,b,c \in \N$ such that
+\begin{equation}
+chr(K_{a,b},\lambda) \leq chr(\prod_{i = 1}^{k}P_{n_{i}}, \lambda) \leq chr(P_{2} \times P_{c}, \lambda) \nonumber
+\end{equation} where $chr(G,\lambda)$ is the number of proper colorings of an arbitrary graph $G$ with $\lambda$ colors.
+\end{thm*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\begin{thebibliography}{9}
+
+\bibitem{Tam09}
+Tamas Hubai, \emph{The Chromatic Polynomial}, Master's Thesis Eotvos Lorand University, 5--10 (2009).
+
+\bibitem{Tut88}
+Read R.C and W.T Tutte, \emph{Chromatic Polynomials}, Selected Topics in Graph Theory, volume 3, 5--10 (1988).
+
+\bibitem{Weiss}
+Weisstein, Eric W. \emph{``Chromatic Polynomial."} From MathWorld--A Wolfram Web Resource. http://mathworld.wolfram.com/ChromaticPolynomial.html
+
+
+\end{thebibliography}
+
+\end{document}

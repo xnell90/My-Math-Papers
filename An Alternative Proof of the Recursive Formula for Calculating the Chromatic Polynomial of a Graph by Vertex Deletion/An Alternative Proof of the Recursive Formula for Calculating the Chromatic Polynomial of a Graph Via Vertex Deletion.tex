@@ -1,0 +1,70 @@
+\documentclass[11pt]{article}
+
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
+\usepackage[margin=1in]{geometry}
+\usepackage[colorlinks]{hyperref}
+
+\newcommand{\C}{{\mathbb{C}}}
+\newcommand{\F}{{\mathbb{F}}}
+\newcommand{\R}{{\mathbb{R}}}
+\newcommand{\Z}{{\mathbb{Z}}}
+
+\newcommand{\eq}[1]{(\ref{eq:#1})}
+\renewcommand{\sec}[1]{Section~\ref{sec:#1}}
+
+\newtheorem{thm}{Theorem}
+\newtheorem*{thm*}{Theorem}
+\newtheorem{cor}{Corollary}
+\newtheorem{lem}{Lemma}
+\newtheorem{defn}{Definition}
+\newtheorem{prop}{Proposition}
+\newtheorem{rem}{Remark}
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{An Alternative Proof of the Recursive Formula for Calculating the Chromatic Polynomial of a Graph by Vertex Deletion}
+
+\author{Alwyn G. Lopez \\
+alwyn333@hotmail.com}
+
+\date{\today}
+\maketitle
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{abstract}
+This paper demonstrates a a double counting proof on the Recursive Formula for Calculating the Chromatic Polynomial of a Graph by Vertex Deletion.
+\end{abstract}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Double Counting Proof}
+\label{sec:intro}
+
+We will state Jin's main theorem in its original form, and then prove it by a double counting argument. For more details on the notation, see \cite{Jin04}.
+
+\begin{thm*}
+Let $G$ be simple graph with $p$ vertices. Let $u \in V(G)$ be such that $d(u) = p - k$, where $d(u)$ denotes the degree of $u$ and $1 \leq k \leq p - 1$. Let $V_{u}^* = \{v_1, v_2, v_3,\ldots,v_{k - 1}\} \subset V(G)$ be the set of all vertices in $V(G)$ such that each vertex in $V_{u}^*$ is not adjacent to $u$. Then we have the vertex-deleting formula for the chromatic polynomial of the graph $G$,
+
+\begin{equation}
+P(G,\lambda) = \lambda P(G_u, \lambda - 1) + \lambda\sum_{H \subseteq V_{u}^*} P(G_{\{u\} \cup H}, \lambda - 1)
+\end{equation}where the summation is extended over all independent sets $H \subseteq V_{u}^*$ with $ 1 \leq |H| \leq k - 1$. Here $G_J$ denotes the graph obtained from $G$ by deleting all vertices in $J$.
+\end{thm*}
+
+\begin{proof}
+The left hand side of equation (1) counts the number of proper colorings on the graph $G$ with $\lambda$ colors, so it suffices to show that the right hand side of equation (1) also counts the number of proper colorings on the graph $G$ with $\lambda$ colors. Let $\bar{H}$ be an arbitrary independent set that contains the vertex $u$. Since there are $\lambda$ colors, pick one color to color all vertices in $\bar{H}$, delete all vertices in $\bar{H}$ including its associated edges, and finally use the remaining $\lambda - 1$ colors to properly color the graph $G_{\bar{H}}$. Then there are $\lambda P(G_{\bar{H}}, \lambda - 1)$ ways to do this. Since $\bar{H}$ is an arbitrary independent set that contains $u$, then we deduce that 
+
+\begin{equation}
+P(G,\lambda) = \lambda\sum_{\bar{H}} P(G_{\bar{H}},\lambda) \nonumber
+\end{equation} gives us the number of ways to properly color the graph $G$ with $\lambda$ colors. Observe that the above sum is summing over all independent sets that contain $u$. Additionally, we know that $\bar{H} = \{u\} \cup H$, where $H \subseteq V_{u}^*$, so the above sum can be simplified to equation (1).
+
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{thebibliography}{9}
+\bibitem{Jin04}
+Xu Jin, \emph{Recursive Formula for Calculating The Chromatic Polynomial of a Graph via Vertex Deletion}, Acta Mathematica Scientia, 577-582 (2004).
+\end{thebibliography}
+
+\end{document}
